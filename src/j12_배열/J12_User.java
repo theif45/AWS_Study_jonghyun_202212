@@ -8,8 +8,10 @@ public class J12_User {
 	private String email; // 이메일
 
 	// ctrl + space
-	public J12_User() {}
-		
+	public J12_User() {
+
+	}
+
 	// alt + shift + s
 	public J12_User(String username, String password, String name, String email) {
 		super();
@@ -57,5 +59,4 @@ public class J12_User {
 				+ "]";
 	}
 
-	
 }

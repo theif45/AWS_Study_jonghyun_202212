@@ -6,21 +6,16 @@ public class Conditional3 {
 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
-		
+
 		int score = 0;
 		String grade = null;
-		
+
 		System.out.print("점수 입력 : ");
 		score = scanner.nextInt();
-		
+
 		/*
-		 * 조건
-		 * score가 0점보다 작거나 100점보다 크면 계산불가
-		 * score가 90 ~ 100점이면 A학점
-		 * score가 80 ~ 89점이면 B학점
-		 * score가 70 ~ 79점이면 C학점
-		 * score가 60 ~ 69점이면 D학점
-		 * score가 0 ~ 59점이면 F학점
+		 * 조건 score가 0점보다 작거나 100점보다 크면 계산불가 score가 90 ~ 100점이면 A학점 score가 80 ~ 89점이면
+		 * B학점 score가 70 ~ 79점이면 C학점 score가 60 ~ 69점이면 D학점 score가 0 ~ 59점이면 F학점
 		 * 
 		 * +학점 추가
 		 */
@@ -48,7 +43,7 @@ public class Conditional3 {
 		} else {
 			System.out.println("점수(" + score + ") : " + grade + "학점");
 		}
-		
+
 	}
 
 }

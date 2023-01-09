@@ -32,7 +32,7 @@ public class Conditional2 {
 			min = b;
 		if (c < min)
 			min = c;
-		
+
 		System.out.println("최대값 : " + max);
 		System.out.println("최소값 : " + min);
 

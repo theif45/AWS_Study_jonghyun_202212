@@ -6,15 +6,15 @@ public class Menu {
 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
-		
+
 //		String name = "김준일";
 //		System.out.println(name.charAt(0)); // 문자열중 첫번째 인덱스를 문자형으로 가져옴
-		
+
 		boolean loopFlag1 = true;
-		
-		while(loopFlag1) {
+
+		while (loopFlag1) {
 			char select = '\0';
-			
+
 			System.out.println("========<< 식당 >>========");
 			System.out.println("1. 김밥천국");
 			System.out.println("2. 탄탄면");
@@ -23,15 +23,15 @@ public class Menu {
 			System.out.println("==========================");
 			System.out.println("q. 프로그램 종료");
 			System.out.println("==========================");
-			
+
 			System.out.print("식당 번호 선택 : ");
 			select = scanner.next().charAt(0); // charAt(a)는 a번째 인덱스의 단어를 입력
-			
+
 			if (select == 'q' || select == 'Q') {
 				loopFlag1 = false;
 			} else if (select == '1') {
 				boolean loopFlag2 = true;
-				
+
 				while (loopFlag2) {
 					System.out.println();
 					System.out.println("========<< 김밥천국 >>========");
@@ -43,10 +43,10 @@ public class Menu {
 					System.out.println("b. 뒤로가기");
 					System.out.println("q. 프로그램 종료");
 					System.out.println("==============================");
-					
+
 					System.out.print("메뉴 선택 : ");
 					select = scanner.next().charAt(0);
-					
+
 					if (select == 'b' || select == 'B') {
 						loopFlag2 = false; // 메뉴 영역 종료
 					} else if (select == 'q' || select == 'Q') {
@@ -71,12 +71,12 @@ public class Menu {
 						System.out.println("다시 입력하세요.");
 						System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 					}
-					
+
 					System.out.println();
 				}
 			} else if (select == '2') {
 				boolean loopFlag2 = true;
-				
+
 				while (loopFlag2) {
 					System.out.println();
 					System.out.println("========<< 탄탄면 >>========");
@@ -87,10 +87,10 @@ public class Menu {
 					System.out.println("b. 뒤로가기");
 					System.out.println("q. 프로그램 종료");
 					System.out.println("==============================");
-					
+
 					System.out.print("메뉴 선택 : ");
 					select = scanner.next().charAt(0);
-					
+
 					if (select == 'b' || select == 'B') {
 						loopFlag2 = false;
 					} else if (select == 'q' || select == 'Q') {
@@ -115,7 +115,7 @@ public class Menu {
 				}
 			} else if (select == '3') {
 				boolean loopFlag2 = true;
-				
+
 				while (loopFlag2) {
 					System.out.println();
 					System.out.println("========<< 홍대개미 >>========");
@@ -127,10 +127,10 @@ public class Menu {
 					System.out.println("b. 뒤로가기");
 					System.out.println("q. 프로그램 종료");
 					System.out.println("==============================");
-					
+
 					System.out.print("메뉴 선택 : ");
 					select = scanner.next().charAt(0);
-					
+
 					if (select == 'b' || select == 'B') {
 						loopFlag2 = false;
 					} else if (select == 'q' || select == 'Q') {
@@ -158,7 +158,7 @@ public class Menu {
 				}
 			} else if (select == '4') {
 				boolean loopFlag2 = true;
-				
+
 				while (loopFlag2) {
 					System.out.println();
 					System.out.println("========<< 밥앤밥 >>========");
@@ -170,10 +170,10 @@ public class Menu {
 					System.out.println("b. 뒤로가기");
 					System.out.println("q. 프로그램 종료");
 					System.out.println("==============================");
-					
+
 					System.out.print("메뉴 선택 : ");
 					select = scanner.next().charAt(0);
-					
+
 					if (select == 'b' || select == 'B') {
 						loopFlag2 = false;
 					} else if (select == 'q' || select == 'Q') {
@@ -206,13 +206,12 @@ public class Menu {
 				System.out.println("다시 입력하세요.");
 				System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 			}
-			
+
 			System.out.println();
 		}
-		
+
 		System.out.println("프로그램 정상 종료!");
-		
-		
+
 	}
 
 }
