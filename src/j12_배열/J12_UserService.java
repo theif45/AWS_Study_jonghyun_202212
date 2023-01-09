@@ -152,9 +152,9 @@ public class J12_UserService {
 			return;
 		}
 
-		System.out.println("새로운 비밀번호 입력 : ");
+		System.out.print("새로운 비밀번호 입력 : ");
 		newPassword = scanner.nextLine();
-		System.out.println("새로운 비밀번호 확인 : ");
+		System.out.print("새로운 비밀번호 확인 : ");
 		confirmPassword = scanner.nextLine();
 
 		if (!comparePassword(newPassword, confirmPassword)) {
@@ -166,6 +166,26 @@ public class J12_UserService {
 		System.out.println("비밀번호 변경 완료.");
 	}
 
+	private void updateName(J12_User user) {
+		String newName = null;
+		
+		System.out.print("새로운 이름 입력 : ");
+		newName = scanner.nextLine();
+		
+		user.setName(newName);
+		System.out.println("이름 변경 완료.");
+	}
+	
+	private void updateEmail(J12_User user) {
+		String newEmail = null;
+		
+		System.out.print("새로운 이메일 입력 : ");
+		newEmail = scanner.nextLine();
+		
+		user.setEmail(newEmail);
+		System.out.println("이메일 변경 완료.");
+	}
+	
 	private boolean comparePassword(String prePassword, String nextPassword) {
 		return prePassword.equals(nextPassword);
 	}
@@ -204,9 +224,9 @@ public class J12_UserService {
 			if (select == '1') {
 				updatePassword(user);
 			} else if (select == '2') {
-				
+				updateName(user);
 			} else if (select == '3') {
-				
+				updateEmail(user);
 			} else {
 				System.out.println(getSelectedErrorMessage());
 			}
