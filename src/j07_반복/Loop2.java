@@ -18,7 +18,7 @@ public class Loop2 {
 
 		for (int i = 0; i < (endNumber - startNumber + 1); i++) {
 			total += i + startNumber;
-//			System.out.println(total);
+			System.out.println(total);
 		}
 
 		System.out.println("총합 : " + total);

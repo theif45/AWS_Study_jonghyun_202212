@@ -1,7 +1,5 @@
 package j10_생성자;
 
-import j09_클래스.J09_Student;
-
 public class J10_Student {
 
 //	참조 변수, 레퍼런스 변수, 멤버 변수
