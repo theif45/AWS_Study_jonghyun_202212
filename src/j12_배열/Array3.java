@@ -9,12 +9,15 @@ public class Array3 {
 		Random random = new Random();
 
 		int[] nums = new int[10];
-
+		
+//		무작위 랜덤
 //		System.out.println(random.nextInt(10));
 
 //		for (int i = 0; i < nums.length; i++) {
 //			nums[i] = i;
 //		}
+
+//		랜덤으로 뽑지만 숫자가 겹치지 않음
 		for (int i = 0; i < nums.length; i++) {
 			while (true) {
 				boolean findFlag = true;

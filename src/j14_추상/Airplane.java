@@ -5,14 +5,10 @@ public class Airplane extends Transportation {
 //	2. 추상 클래스로 변경
 	@Override
 	public void go() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void stop() {
-		// TODO Auto-generated method stub
-
 	}
 
 }
