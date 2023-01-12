@@ -14,6 +14,7 @@ public class ObjectToString {
 		Student student3 = new Student("김두영", 28);
 		Student student4 = new Student("강의진", 29);
 
+//		.toString은 생략 가능
 		System.out.println(student1);
 		System.out.println(student2);
 		System.out.println(student3);
@@ -21,6 +22,7 @@ public class ObjectToString {
 
 		System.out.println();
 
+//		String 매개 변수를 넣어줄 경우 toString 사용
 		System.out.println(student1.toString());
 		System.out.println(student2.toString());
 		System.out.println(student3.toString());

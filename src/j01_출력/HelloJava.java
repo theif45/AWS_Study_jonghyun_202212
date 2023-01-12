@@ -1,5 +1,7 @@
 package j01_출력;
 
+import j17_스태틱.싱글톤.KIA;
+
 /**
  * 
  * @author ITPS
@@ -25,6 +27,10 @@ public class HelloJava {
 		System.out.println("연락처 : 010-9737-1916");
 		System.out.println("수업 : AWS기반 공공 빅데이터 활용 웹개발자 양성");
 
+		System.out.println();
+		KIA.getInstance().printCompanyName();
+		
+	
 	}
 
 }
