@@ -114,7 +114,7 @@ public class UserManagementFrame extends JFrame {
 //			사용하고 싶은 메소드만 오버라이드하여 사용가능
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+				System.out.println("로그인 요청!!!");
 			}
 		});
 		loginButton.setBackground(new Color(192, 192, 192));
