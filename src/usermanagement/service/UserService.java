@@ -31,6 +31,37 @@ public class UserService {
 		gson = new GsonBuilder().setPrettyPrinting().create();
 	}
 	
+	public Map<String, String> login(String userJson){
+		
+		Map<String, String> response = new HashMap<>();
+		Map<String, String> userMap = gson.fromJson(userJson, Map.class);
+		for(Entry<String, String> userEntry : userMap.entrySet()) {
+			if(userEntry.getValue().isBlank()) {
+				response.put("error", userEntry.getKey() + "은(는) 공백일 수 없습니다.");
+				return response;
+			}
+		}
+		
+		User user = gson.fromJson(userJson, User.class);
+		
+		System.out.println("로그인 요청!!");
+		
+		if(!(duplicatedUsername(user.getUsername()))) {
+			response.put("error", "사용자 정보가 잘못되었습니다.");
+			return response;
+		}
+		
+		if(!(duplicatedPassword(user.getPassword()))) {
+			response.put("error", "사용자 정보가 잘못되었습니다.");
+			return response;
+		}
+		
+		response.put("ok", "로그인 성공.");
+		System.out.println();
+		return response;
+		
+	}
+	
 	public Map<String, String> register(String userJson) {
 //		reponse : 응답
 		Map<String, String> response = new HashMap<>();
@@ -71,7 +102,6 @@ public class UserService {
 		
 		response.put("ok", "회원가입 성공.");
 		
-		
 		return response;
 	}
 	
@@ -81,6 +111,10 @@ public class UserService {
 	
 	private boolean duplicatedEmail(String email) {
 		return userRepository.findUserByEmail(email) != null;
+	}
+	
+	private boolean duplicatedPassword(String password) {
+		return userRepository.findUserByPassword(password) != null;
 	}
 	
 }

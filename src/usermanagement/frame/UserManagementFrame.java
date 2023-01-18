@@ -107,14 +107,29 @@ public class UserManagementFrame extends JFrame {
 		
 		JButton loginButton = new JButton("Login");
 		
-		
 		loginButton.addMouseListener(new MouseAdapter() {
 //			인터페이스는 모두 구현해야함
 //			MouseAdapter내에 인터페이스를 모두 구현해놓음
 //			사용하고 싶은 메소드만 오버라이드하여 사용가능
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("로그인 요청!!!");
+				JsonObject userJson = new JsonObject();
+				userJson.addProperty("username", usernameField.getText());
+				userJson.addProperty("password", passwordField.getText());
+
+				System.out.println(userJson);
+				UserService userService = UserService.getInstance();
+				
+				Map<String, String> response = userService.login(userJson.toString());
+				
+				if(response.containsKey("error")) {
+					JOptionPane.showMessageDialog(null, response.get("error"),"error",JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				JOptionPane.showMessageDialog(null, response.get("ok"),"ok",JOptionPane.INFORMATION_MESSAGE);
+				
+				clearFields(loginFields);
+//				System.out.println("로그인 요청!!!");
 			}
 		});
 		loginButton.setBackground(new Color(192, 192, 192));
