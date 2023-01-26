@@ -10,6 +10,7 @@ public class RoleInsert {
 	private DBConnectionMgr pool;
 	
 //	RoleInsert클래스 생성 시에 싱글톤으로 DBConnectionMgr이 생성되도록 함
+//	유일한 튜브대여소가 되어야 컨트롤이 가능함
 	public RoleInsert() {
 		pool = DBConnectionMgr.getInstance();
 	}
@@ -19,8 +20,10 @@ public class RoleInsert {
 		int successCount = 0;
 
 		String sql = null;
+//		freeconnection을 통해 아래 3개의 객체를 소멸시킬 수 있음, 데이터베이스와의 연결을 끊어줌
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		
 		
 		try {
@@ -39,7 +42,7 @@ public class RoleInsert {
 			int newKey = 0;
 			
 //			자동적으로 넣은 key값 찾아 데이터를 ResultSet타입의 변수에 대입
-			ResultSet rs = pstmt.getGeneratedKeys();
+			rs = pstmt.getGeneratedKeys();
 //			rs의 다음 데이터가 있으면 rs의 1번 파라미터(id)의 값을 newKey의 변수에 대입 
 			if(rs.next()) {
 				newKey = rs.getInt(1);
@@ -50,6 +53,9 @@ public class RoleInsert {
 //			예외처리
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+//			3개의 객체를 소멸         
+			pool.freeConnection(con, pstmt, rs);
 		}
 //		성공횟수를 리턴
 		return successCount;
