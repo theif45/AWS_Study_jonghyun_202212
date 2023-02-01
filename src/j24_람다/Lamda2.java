@@ -7,7 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Lamda2 {
 
@@ -45,7 +49,7 @@ public class Lamda2 {
 		
 		e.accept("이종현");
 		
-		//메소드 참조 표현식 ([인스턴스] :: [메소드명 또는 new])
+		// 메소드 참조 표현식 ([인스턴스] :: [메소드명 또는 new])
 		Consumer<String> f = System.out :: println;
 		f.accept("출력");
 		
@@ -75,5 +79,43 @@ public class Lamda2 {
 			System.out.println();
 		});
 		
+		// 4. Function<T, R>
+		Function<String, Integer> h = num -> Integer.parseInt(num);
+		
+		int convertStrNum1 = h.apply("10000");
+		int convertStrNum2 = h.apply("20000");
+		
+		System.out.println(convertStrNum1 + convertStrNum2);
+		
+		// 5. Predicate<T>
+		Predicate<String> p1 = str -> str.startsWith("김");
+		Predicate<String> p2 = str -> str.startsWith("이");
+		
+		
+		Function<Predicate<String>, Boolean> function1 =
+				predicate -> predicate.or(str -> str.startsWith("이")).test("김준일");
+		
+		boolean rs = function1.apply(str -> str.startsWith("김"));
+		
+		System.out.println(rs);
+		
+		List<String> nameList = new ArrayList<>();
+		nameList.add("김종환");
+		nameList.add("고병수");
+		nameList.add("김상현");
+		nameList.add("김준경");
+		
+		// 스트림 -> 일회용
+		Stream<String> stream = nameList.stream().filter(name -> name.startsWith("김"));
+//		stream.forEach(name -> System.out.println(name));
+		List<String> newList = stream.collect(Collectors.toList());
+		System.out.println(newList);
+		
+		System.out.println("========================================");
+		
+		nameList.stream()
+			.filter(name -> name.startsWith("김"))
+			.collect(Collectors.toList())
+			.forEach(System.out::println);
 	}
 }
