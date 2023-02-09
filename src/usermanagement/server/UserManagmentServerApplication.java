@@ -21,8 +21,12 @@ public class UserManagmentServerApplication implements Runnable{
 			e.printStackTrace();
 		} finally {
 			try {
-				serverSocket.close();
+				if(serverSocket != null) {
+					serverSocket.close();
+				}
+				
 				System.out.println("======<< 서버 종료 >>======");
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -31,8 +35,10 @@ public class UserManagmentServerApplication implements Runnable{
 	
 	private void socketConnection() throws IOException {
 		while(true) {
+			// 접속 시 소켓 객체 생성
 			Socket socket = serverSocket.accept();
 			SocketServer socketServer = new SocketServer(socket);
+			// start 하면 socketServer는 thread
 			socketServer.start();
 		}
 	}

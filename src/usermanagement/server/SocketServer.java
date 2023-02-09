@@ -47,6 +47,8 @@ public class SocketServer extends Thread{
 		BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 		
 		while(true) {
+			// data가 들어오는 것을 기다림
+			// json으로 들어옴
 			String request = reader.readLine();
 			if(request == null) {
 				throw new ConnectException();
@@ -56,12 +58,13 @@ public class SocketServer extends Thread{
 	}
 	
 	private void requstMapping(String request) throws IOException {
+		// RequestDto 객체로 변환
 		RequestDto<?> requestDto = gson.fromJson(request, RequestDto.class);
 		String resource = requestDto.getResource();
 		switch (resource) {
 			case "register":
-				User user = gson.fromJson((String)requestDto.getBody(), User.class);
-				ResponseDto<?> responseDto = AccountController.getInstance().register(user);
+				ResponseDto<?> responseDto = 
+					AccountController.getInstance().register((String)requestDto.getBody());
 				sendResponse(responseDto);
 				break;
 			default:
