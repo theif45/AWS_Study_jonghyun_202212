@@ -27,9 +27,9 @@ class ConnectedSocket extends Thread {
 	private Socket socket;
 	private InputStream inputStream;
 	private OutputStream outputStream;
-	//JSON을 사용하기 위해 Gson 선언
+	// JSON을 사용하기 위해 Gson 선언
 	private Gson gson;
-	
+
 	private String username;
 
 	public ConnectedSocket(Socket socket) {
@@ -43,38 +43,43 @@ class ConnectedSocket extends Thread {
 		try {
 			inputStream = socket.getInputStream();
 			BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
-			
-			while(true) {
+
+			while (true) {
 				// requestDto(JSON)으로 JSON형태로 가져옴
 				String request = in.readLine();
 				// request를 RequestDto형태로 변환
 				RequestDto requestDto = gson.fromJson(request, RequestDto.class);
-				
-				switch(requestDto.getResource()) {
-					case "join":
-						JoinReqDto joinReqDto = gson.fromJson(requestDto.getBody(), JoinReqDto.class);
-						username = joinReqDto.getUsername();
-						List<String> connectedUsers = new ArrayList<>();
-						
-						for(ConnectedSocket connectedSocket : socketList) {
-							connectedUsers.add(connectedSocket.getUsername());
-						}
-						
-						JoinRespDto joinRespDto = new JoinRespDto(username + "님이 접속하였습니다.\n",connectedUsers);
-						System.out.println(joinRespDto);
-						
-						sendToAll(requestDto.getResource(), "ok", gson.toJson(joinRespDto));
-						break;
-					case "sendMessage":
-						MessageReqDto messageReqDto = gson.fromJson(requestDto.getBody(), MessageReqDto.class);
-						
-						if(messageReqDto.getToUser().equalsIgnoreCase("all")) {
-							String message = messageReqDto.getFromUser() + "[전체]:" + messageReqDto.getMessageValue();
-							MessageRespDto messageRespDto = new MessageRespDto(message);
-							sendToAll(requestDto.getResource(), "ok", gson.toJson(messageRespDto));
-						}
-						
-						break;
+
+				switch (requestDto.getResource()) {
+				case "join":
+					JoinReqDto joinReqDto = gson.fromJson(requestDto.getBody(), JoinReqDto.class);
+					username = joinReqDto.getUsername();
+					List<String> connectedUsers = new ArrayList<>();
+
+					for (ConnectedSocket connectedSocket : socketList) {
+						connectedUsers.add(connectedSocket.getUsername());
+					}
+
+					JoinRespDto joinRespDto = new JoinRespDto(username + "님이 접속하였습니다.\n", connectedUsers);
+					System.out.println(joinRespDto);
+
+					sendToAll(requestDto.getResource(), "ok", gson.toJson(joinRespDto));
+					break;
+
+				case "sendMessage":
+					MessageReqDto messageReqDto = gson.fromJson(requestDto.getBody(), MessageReqDto.class);
+
+					if (messageReqDto.getToUser().equalsIgnoreCase("all")) {
+						String message = messageReqDto.getFromUser() + "[전체]:" + messageReqDto.getMessageValue();
+						MessageRespDto messageRespDto = new MessageRespDto(message);
+						sendToAll(requestDto.getResource(), "ok", gson.toJson(messageRespDto));
+					} else {
+						String message = messageReqDto.getFromUser() + "[" + messageReqDto.getToUser() + "]:" + messageReqDto.getMessageValue();
+						MessageRespDto messageRespDto = new MessageRespDto(message);
+						sendToUser(requestDto.getResource(), "ok", gson.toJson(messageRespDto),messageReqDto.getToUser());
+					}
+
+					break;
 				}
 			}
 
@@ -82,14 +87,25 @@ class ConnectedSocket extends Thread {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void sendToAll(String resource, String status, String body) throws IOException {
 		ResponseDto responseDto = new ResponseDto(resource, status, body);
 		for (ConnectedSocket connectedSocket : socketList) {
 			OutputStream outputStream = connectedSocket.getSocket().getOutputStream();
 			PrintWriter out = new PrintWriter(outputStream, true);
 			out.println(gson.toJson(responseDto));
-			
+
+		}
+	}
+	
+	private void sendToUser(String resource, String status, String body, String toUser) throws IOException {
+		ResponseDto responseDto = new ResponseDto(resource, status, body);
+		for (ConnectedSocket connectedSocket : socketList) {
+			if(connectedSocket.getUsername().equals(toUser) || connectedSocket.getUsername().equals(username)) {
+				OutputStream outputStream = connectedSocket.getSocket().getOutputStream();
+				PrintWriter out  = new PrintWriter(outputStream, true);
+				out.println(gson.toJson(responseDto));
+			}
 		}
 	}
 }
