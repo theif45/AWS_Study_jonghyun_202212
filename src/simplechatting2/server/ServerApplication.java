@@ -94,7 +94,6 @@ class ConnectedSocket extends Thread {
 			OutputStream outputStream = connectedSocket.getSocket().getOutputStream();
 			PrintWriter out = new PrintWriter(outputStream, true);
 			out.println(gson.toJson(responseDto));
-
 		}
 	}
 	
