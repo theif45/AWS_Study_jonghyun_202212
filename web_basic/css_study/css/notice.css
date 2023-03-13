@@ -1,5 +1,6 @@
 * {
     box-sizing: border-box;
+    letter-spacing: -1px;
 }
 
 ul {
@@ -201,7 +202,6 @@ body {
     margin-left: 70px;
     border: 1px solid #dbdbdb;
     width: 290px;
-    height: 600px;
 }
 
 .product-container:nth-of-type(1) {
@@ -220,4 +220,115 @@ body {
 
 .product-image-container img {
     width: 280px;
+}
+
+
+.color-text {
+    margin-left: 1.6px;
+    font-size: 10px;
+    font-weight: 600;
+    color: #1d1d1f;
+}
+
+.color-radio-group {
+    display: flex;
+}
+
+.color-radio-group input[type="radio"] {
+    display: none;
+}
+
+.color-radio-group input[type="radio"] + label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1.6px;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+
+    cursor: pointer;
+}
+
+.color-radio-group input[type="radio"] + label:hover {
+    border: 2px solid #dbdbdb;
+}
+
+.color-radio-group input[type="radio"]:checked + label {
+    border: 2px solid #0066cc;
+}
+
+.color-radio-group input[type="radio"] + label .color-circle {
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+}
+
+.c1 {
+    background-color: #2e3641;
+}
+
+.c2 {
+    background-color: #f0e5d3;
+}
+
+.c3 {
+    background-color: #7d7e80;
+}
+
+.c4 {
+    background-color: #e3e4e6;
+}
+
+.product-detail-info {
+    margin: 20px 0;
+}
+
+.cpu-image {
+    padding-bottom: 10px;
+    width: 51px;
+    height: 61px;
+    overflow: hidden;
+}
+
+.cpu-image img {
+    width: 51px;
+}
+
+.product-simple-info {
+    font-size: 24px;
+    color: #1d1d1f;
+    font-weight: 600;
+}
+
+.product-specs-list {
+    margin-top: 20px;
+}
+
+.product-specs-list li {
+    margin-top: 5.6px;
+    font-size: 14px;
+    color: #1d1d1f;
+}
+
+.price-container {
+    margin-top: 19.2px;
+}
+
+.product-price {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1d1d1f;
+}
+
+.product-price-monthly-plan {
+    padding-top: 6px;
+    font-size: 14px;
+    color: #86868b;
+}
+
+.monthly-plan-link {
+    padding-top: 6px;
+    font-size: 14px;
+    color: #0066cc;
 }
