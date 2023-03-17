@@ -18,8 +18,9 @@ class InformationEvent {
     addEventPhotoChange() {
         const photoFile = document.querySelector(".photo-file");
         photoFile.onchange = () => {
-            fileService.getInstance().ChangePhoto();
+            FileService.getInstance().ChangePhoto();
         }
+        
     }
 
     addEventAboutMeModifyClick() {
@@ -28,6 +29,7 @@ class InformationEvent {
             const aboutMeSaveButton = document.querySelector(".s-aboutme");
             aboutMeSaveButton.classList.remove("button-hidden");
             aboutMeModifyButton.classList.add("button-hidden");
+
             const infoInputContainers = document.querySelectorAll(".info-input-container");
             infoInputContainers.forEach(infoInputContainer => {
                 infoInputContainer.querySelector(".info-input").disabled = false;
@@ -41,11 +43,20 @@ class InformationEvent {
             const aboutMeModifyButton = document.querySelector(".m-aboutme");
             aboutMeModifyButton.classList.remove("button-hidden");
             aboutMeSaveButton.classList.add("button-hidden");
+
             const infoInputContainers = document.querySelectorAll(".info-input-container");
+            const userInfo = InformationService.getInstance().userInfo;
+
             infoInputContainers.forEach(infoInputContainer => {
-                infoInputContainer.querySelector(".info-input").disabled = true;
+                const infoInput = infoInputContainer.querySelector(".info-input");
+                userInfo[infoInput.id] = infoInput.value;
+                infoInput.disabled = true;
             });
+
+            localStorage.setItem("userInfo", JSON.stringify(userInfo));
         }
+
+        
     }
 
     addEventIntroduceModifyClick() {
@@ -54,6 +65,7 @@ class InformationEvent {
             const introduceSaveButton = document.querySelector(".s-introduce");
             introduceSaveButton.classList.remove("button-hidden");
             introduceModifyButton.classList.add("button-hidden");
+
             const introduceInput = document.querySelector(".introduce-input");
             introduceInput.disabled = false;
         }
@@ -67,42 +79,69 @@ class InformationEvent {
             introduceSaveButton.classList.add("button-hidden");
             const introduceInput = document.querySelector(".introduce-input");
             introduceInput.disabled = true;
+
+            const userInfo = InformationService.getInstance().userInfo;
+            userInfo["introduce"] = introduceInput.value;
+            localStorage.setItem("userInfo", JSON.stringify(userInfo));
         }
     }
-
-
-    // addEventInput(status) {
-    //     const infoInputs = document.querySelectorAll(".info-input");
-    //     infoInputs.forEach(infoInput => {
-    //         infoInput.disabled = status;
-    //         if(!status){
-    //             infoInput.value = "";
-    //         }
-    //     });
-    // }
-
-    // addEventButton() {
-    //     const mAboutme = document.querySelector(".m-aboutme");
-    //     const sAboutme = document.querySelector(".s-aboutme");
-    //     mAboutme.onclick = () => { 
-    //         this.addEventInput(false);
-    //         mAboutme.classList.add("button-hidden");
-    //         sAboutme.classList.remove("button-hidden");
-    //     }
-
-    //     sAboutme.onclick = () => {
-    //         this.addEventInput(true);
-    //         mAboutme.classList.remove("button-hidden");
-    //         sAboutme.classList.add("button-hidden");
-    //     }
-    // }
 }
 
-class fileService {
+class InformationService {
     static #instance = null;
     static getInstance() {
         if(this.#instance == null) {
-            this.#instance = new fileService();
+            this.#instance = new InformationService();
+        }
+        return this.#instance;
+    }
+
+    userInfo = {};
+
+    loadInfo() {
+        this.loadInfoPhoto();
+        this.loadInfoUser();
+    }
+
+    loadInfoPhoto() {
+        const infoPhotoImg = document.querySelector(".info-photo img");
+        const infoPhoto = localStorage.getItem("infoPhoto");
+        if(infoPhoto == null) {
+            infoPhotoImg.src = "./images/noimage.png";
+        }else {
+            infoPhotoImg.src = infoPhoto;
+        }
+    }
+
+    loadInfoUser() {
+        this.userInfo = JSON.parse(localStorage.getItem("userInfo"))
+        if (this.userInfo == null) {
+            this.userInfo = {};
+            return;
+        }
+        Object.keys(this.userInfo).forEach(key => {
+            const infoInput = document.querySelectorAll(".info-input"); 
+            infoInput.forEach(input => {
+                if(input.id == key) {
+                    input.value = this.userInfo[key];
+                }
+            });
+
+            if(typeof this.userInfo.introduce == "undefined") {
+                return;
+            }
+
+            const introduceInput = document.querySelector(".introduce-input");
+            introduceInput.value = this.userInfo.introduce;
+        });
+    }
+}
+
+class FileService {
+    static #instance = null;
+    static getInstance() {
+        if(this.#instance == null) {
+            this.#instance = new FileService();
         }
         return this.#instance;
     }
@@ -111,6 +150,11 @@ class fileService {
         const photoForm = document.querySelector(".photo-form");
         const formData = new FormData(photoForm);
         const fileValue = formData.get("file");
+
+        if(fileValue.size == 0) {
+            return;
+        }
+
         this.showPreview(fileValue);
     }
 
@@ -122,6 +166,8 @@ class fileService {
             const photoImg = document.querySelector(".info-photo img");
             // 이벤트가 일어난 타겟의 결과를 가져옴
             photoImg.src = e.target.result;
+            localStorage.setItem("infoPhoto", photoImg.src);
         }
+
     }
 }

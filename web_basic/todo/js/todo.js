@@ -25,6 +25,24 @@ class TodoEvent {
             }
         }
     }
+
+    addEventRemoveTodoClick() {
+        const removeButtons = document.querySelectorAll(".content-footer .remove-button");
+        removeButtons.forEach((removeButton, index) => {
+            removeButton.onclick = () => {
+                ModalService.getInstance().showRemoveModal(index);
+            }
+        });   
+    }
+
+    addEventModifyTodoClick() {
+        const modifyButtons = document.querySelectorAll(".content-footer .modify-button");
+        modifyButtons.forEach((modifyButton, index) => {
+            modifyButton.onclick = () => {
+                ModalService.getInstance().showModifyModal(index);
+            }
+        });   
+    }
 }
 
 class TodoService {
@@ -44,6 +62,11 @@ class TodoService {
         } else {
             this.todoList = JSON.parse(localStorage.getItem("todoList"));
         }
+        this.loadTodoList();
+    }
+
+    updateLocalStorage() {
+        localStorage.setItem("todoList", JSON.stringify(this.todoList));
         this.loadTodoList();
     }
 
@@ -74,8 +97,7 @@ class TodoService {
         }
 
         this.todoList.push(todoObj);
-        localStorage.setItem("todoList", JSON.stringify(this.todoList));
-        this.loadTodoList();
+        this.updateLocalStorage()
     }
 
     loadTodoList() {
@@ -103,5 +125,8 @@ class TodoService {
                 </li>
             `;
         });
+
+        TodoEvent.getInstance().addEventRemoveTodoClick();
+        TodoEvent.getInstance().addEventModifyTodoClick();
     }
 }
